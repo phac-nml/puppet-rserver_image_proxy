@@ -7,14 +7,13 @@ class rserver_image_proxy(
     ensure => 'directory',
     path   => '/tmp/rserver_image_proxy',
     mode   => '0644',
-    onlyif => 'test -d /opt/jupyterhub',
   }
 
   file { '/tmp/rserver_image_proxy/setup.py':
     ensure  => 'file',
     path    => '/tmp/rserver_image_proxy/setup.py',
     mode    => '0644',
-    content => epp('rserver_image_proxy/setup.py.epp', {'rserver_images'=>$rserver_images}),
+    content => epp("${module_name}/rserver_image_proxy/setup.py.epp", {'rserver_images'=>$rserver_images}),
     require => File['/tmp/rserver_image_proxy'],
   }
 
@@ -28,7 +27,7 @@ class rserver_image_proxy(
     ensure  => 'file',
     path    => '/tmp/rserver_image_proxy/rserver_image_proxy/__init__.py',
     mode    => '0644',
-    content => epp('rserver_image_proxy/rserver_image_proxy/__init__.py.epp', {'rserver_images'=>$rserver_images}),
+    content => epp("${module_name}/rserver_image_proxy/rserver_image_proxy/__init__.py.epp", {'rserver_images'=>$rserver_images}),
     require => File['/tmp/rserver_image_proxy/rserver_image_proxy'],
   }
 
