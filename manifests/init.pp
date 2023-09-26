@@ -32,10 +32,13 @@ class rserver_image_proxy(
     require => File['/tmp/rserver_image_proxy/rserver_image_proxy'],
   }
 
+  # extract major python version (i.e. 3.9) from python --version
+  $python_version = inline_template("<%=`/opt/jupyterhub/bin/python3 --version | sed 's/Python //' | sed 's/\.[0-9]*\$//'` %>")
+
   exec { 'install rserver_image_proxy':
     command  => '/opt/jupyterhub/bin/pip3 install /tmp/rserver_image_proxy',
     require  => [File['/tmp/rserver_image_proxy/rserver_image_proxy/__init__.py'],File['tmp/rserver_image_proxy/setup.py']],
     provider => 'shell',
+    creates  => "/opt/jupyterhub/lib64/python${python_version}/site-packages/rserver_image_proxy/__init__.py"
   }
-
 }
