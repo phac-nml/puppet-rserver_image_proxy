@@ -1,0 +1,24 @@
+import setuptools
+
+setuptools.setup(
+  name="test-image-proxy",
+  version="0.1.0",
+  author="Jacob Janzen",
+  description="Jupyter extension to proxy multiple rserver images",
+  packages=setuptools.find_packages(),
+  keywords=['Jupyter'],
+  classifiers=['Framework :: Jupyter'],
+  install_requires=[
+    'jupyter-server-proxy'
+  ],
+  entry_points={
+   'jupyter_serverproxy_servers': [
+      <% $rserver_images.each |$image| { -%>
+      'rstudio-<%=$image%> = rserver_image_proxy:setup_rserver_<%=$image%>'
+      <% } -%>
+    ]
+  },
+  package_data={
+    'test_image_proxy': ['icons/rstudio.svg'],
+  },
+)
