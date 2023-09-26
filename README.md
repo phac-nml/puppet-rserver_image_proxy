@@ -7,9 +7,6 @@
     * [What rserver_image_proxy affects](#what-rserver_image_proxy-affects)
     * [Setup requirements](#setup-requirements)
     * [Beginning with rserver_image_proxy](#beginning-with-rserver_image_proxy)
-1. [Usage - Configuration options and additional functionality](#usage)
-1. [Limitations - OS compatibility, etc.](#limitations)
-1. [Development - Guide for contributing to the module](#development)
 
 ## Description
 
