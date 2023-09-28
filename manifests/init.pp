@@ -32,7 +32,7 @@ class rserver_image_proxy(
   }
 
   # extract major python version (i.e. 3.9) from python --version
-  $python_version = inline_template("<%=`/opt/jupyterhub/bin/python3 --version | sed 's/Python //' | sed 's/\.[0-9]*\$//'` %>")
+  $python_version = inline_template("<%=`/opt/jupyterhub/bin/python3 --version | sed 's/Python //' | sed 's/\.[0-9]*\$//' | tr -d '\\n'` %>")
 
   $search = $images
     .map |$image| { "grep -q 'setup_rserver_${image}()' /opt/jupyterhub/lib64/python${python_version}/site-packages/rserver_image_proxy/__init__.py"}
