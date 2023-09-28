@@ -14,11 +14,8 @@ setuptools.setup(
   entry_points={
    'jupyter_serverproxy_servers': [
       <% $rserver_images.each |$image| { -%>
-      'rstudio-<%=$image%> = rserver_image_proxy:setup_rserver_<%=$image%>'
+      'rstudio-<%=$image%> = rserver_image_proxy:setup_rserver_<%=$image%>',
       <% } -%>
     ]
-  },
-  package_data={
-    'test_image_proxy': ['icons/rstudio.svg'],
   },
 )
