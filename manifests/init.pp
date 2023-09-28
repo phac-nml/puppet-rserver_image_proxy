@@ -2,32 +2,32 @@
 class rserver_image_proxy(
   Array $rserver_images = []
 ) {
-  file { '/tmp/rserver-image-proxy':
+  file { '/tmp/rserver_image_proxy':
     ensure => 'directory',
-    path   => '/tmp/rserver-image-proxy',
+    path   => '/tmp/rserver_image_proxy',
     mode   => '0644',
   }
 
-  file { '/tmp/rserver-image-proxy/setup.py':
+  file { '/tmp/rserver_image_proxy/setup.py':
     ensure  => 'file',
-    path    => '/tmp/rserver-image-proxy/setup.py',
+    path    => '/tmp/rserver_image_proxy/setup.py',
     mode    => '0644',
-    content => epp("${module_name}/rserver-image-proxy/setup.py.epp", {'rserver_images'=>$rserver_images}),
-    require => File['/tmp/rserver-image-proxy'],
+    content => epp("${module_name}/rserver_image_proxy/setup.py.epp", {'rserver_images'=>$rserver_images}),
+    require => File['/tmp/rserver_image_proxy'],
   }
 
-  file { '/tmp/rserver-image-proxy/rserver-image-proxy':
+  file { '/tmp/rserver_image_proxy/rserver_image_proxy':
     ensure => 'directory',
-    path   => '/tmp/rserver-image-proxy/rserver-image-proxy',
+    path   => '/tmp/rserver_image_proxy/rserver_image_proxy',
     mode   => '0644',
   }
 
-  file { '/tmp/rserver-image-proxy/rserver-image-proxy/__init__.py':
+  file { '/tmp/rserver_image_proxy/rserver_image_proxy/__init__.py':
     ensure  => 'file',
-    path    => '/tmp/rserver-image-proxy/rserver-image-proxy/__init__.py',
+    path    => '/tmp/rserver_image_proxy/rserver_image_proxy/__init__.py',
     mode    => '0644',
-    content => epp("${module_name}/rserver-image-proxy/rserver-image-proxy/__init__.py.epp", {'rserver_images'=>$rserver_images}),
-    require => File['/tmp/rserver-image-proxy/rserver-image-proxy'],
+    content => epp("${module_name}/rserver_image_proxy/rserver_image_proxy/__init__.py.epp", {'rserver_images'=>$rserver_images}),
+    require => File['/tmp/rserver_image_proxy/rserver_image_proxy'],
   }
 
   # extract major python version (i.e. 3.9) from python --version
@@ -35,10 +35,10 @@ class rserver_image_proxy(
 
   # only install the proxy if jupyterhub is installed
   exec { 'install rserver_image_proxy':
-    command  => '/opt/jupyterhub/bin/pip3 install /tmp/rserver-image-proxy',
-    require  => [File['/tmp/rserver-image-proxy/rserver-image-proxy/__init__.py'],File['/tmp/rserver-image-proxy/setup.py']],
+    command  => '/opt/jupyterhub/bin/pip3 install /tmp/rserver_image_proxy',
+    require  => [File['/tmp/rserver_image_proxy/rserver_image_proxy/__init__.py'],File['/tmp/rserver_image_proxy/setup.py']],
     provider => 'shell',
-    creates  => "/opt/jupyterhub/lib64/python${python_version}/site-packages/rserver-image-proxy/__init__.py",
+    creates  => "/opt/jupyterhub/lib64/python${python_version}/site-packages/rserver_image_proxy/__init__.py",
     onlyif   => 'test -d /opt/jupyterhub'
   }
 }
