@@ -1,7 +1,7 @@
 import setuptools
 
 setuptools.setup(
-  name="rserver-image-proxy",
+  name="rserver_image_proxy",
   version="0.1.0",
   author="Jacob Janzen",
   description="Jupyter extension to proxy multiple rserver images",
