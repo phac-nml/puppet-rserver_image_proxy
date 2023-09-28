@@ -92,6 +92,6 @@ def image_type_setup(name):
     return server_process
 
 <% $rserver_images.each |$image| { -%>
-def setup_rserver_<%=$name%>():
-    return image_type_setup('<%=$name%>')
+def setup_rserver_<%=$image%>():
+    return image_type_setup('<%=$image%>')
 <% } -%>
