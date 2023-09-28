@@ -3,19 +3,19 @@
 ## Table of Contents
 
 1. [Description](#description)
-1. [Setup - The basics of getting started with rserver_image_proxy](#setup)
-    * [What rserver_image_proxy affects](#what-rserver_image_proxy-affects)
+1. [Setup - The basics of getting started with Rserver Image Proxy](#setup)
+    * [What Rserver Image Proxy affects](#what-rserver-image-proxy-affects)
     * [Setup requirements](#setup-requirements)
-    * [Beginning with rserver_image_proxy](#beginning-with-rserver_image_proxy)
+    * [Beginning with Rserver Image Proxy](#beginning-with-rserver-image-proxy)
 
 ## Description
 
-This module creates a Python module dynamically from hieradata to proxy images
-that contain RStudio Server with JupyterHub.
+This module creates a Python module dynamically from hieradata to proxy singularity
+images that contain RStudio Server with JupyterHub.
 
 ## Setup
 
-### What rserver_image_proxy affects
+### What Rserver Image Proxy affects
 
 The module is created in /tmp/ and installed under /opt/jupyterhub.
 
@@ -23,7 +23,8 @@ The module is created in /tmp/ and installed under /opt/jupyterhub.
 
 Should also have puppet-jupyterhub module installed.
 
-### Beginning with rserver_image_proxy
+### Beginning with Rserver Image Proxy
 
-Specify the RServer image names with the `rserver_image_proxy::rserver_images`
+Specify the RServer image names with the `rserver_image_proxy::images` variable
+and path at which the images are installed with the `rserver_image_proxy::image_path`
 variable and ensure that `puppet-jupyterhub` is installed.

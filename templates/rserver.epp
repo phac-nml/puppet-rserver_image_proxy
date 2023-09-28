@@ -1,0 +1,7 @@
+#!/bin/sh
+
+singularity exec \
+    --bind /Drives \
+    --writable-tmpfs \
+    <%=$path%>/<%=$image%>-rserver.sif \
+        /usr/lib/rstudio-server/bin/rserver $@

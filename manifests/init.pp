@@ -1,6 +1,7 @@
 # Proxy RStudio Server images for JupyterHub by creating and installing a python module
 class rserver_image_proxy(
-  Array $rserver_images = []
+  String $image_path,
+  Array $images = []
 ) {
   file { '/tmp/rserver_image_proxy':
     ensure => 'directory',
@@ -26,7 +27,7 @@ class rserver_image_proxy(
     ensure  => 'file',
     path    => '/tmp/rserver_image_proxy/rserver_image_proxy/__init__.py',
     mode    => '0644',
-    content => epp("${module_name}/rserver_image_proxy/rserver_image_proxy/__init__.py.epp", {'rserver_images'=>$rserver_images}),
+    content => epp("${module_name}/rserver_image_proxy/rserver_image_proxy/__init__.py.epp", {'rserver_images'=>$images}),
     require => File['/tmp/rserver_image_proxy/rserver_image_proxy'],
   }
 
@@ -40,5 +41,14 @@ class rserver_image_proxy(
     provider => 'shell',
     creates  => "/opt/jupyterhub/lib64/python${python_version}/site-packages/rserver_image_proxy/__init__.py",
     onlyif   => 'test -d /opt/jupyterhub'
+  }
+
+  $images.each |String $image| {
+    file { "/usr/local/bin/${image}-rserver":
+      ensure  => 'file',
+      path    => "/usr/local/bin/${image}-rserver",
+      mode    => '0755',
+      content => epp("${module_name}/rserver.epp", {'path'=>$image_path, 'image'=>$image})
+    }
   }
 }
