@@ -13,7 +13,7 @@ class rserver_image_proxy(
     ensure  => 'file',
     path    => '/tmp/rserver_image_proxy/setup.py',
     mode    => '0644',
-    content => epp("${module_name}/rserver_image_proxy/setup.py.epp", {'rserver_images'=>$rserver_images}),
+    content => epp("${module_name}/rserver_image_proxy/setup.py.epp", {'rserver_images'=>$images}),
     require => File['/tmp/rserver_image_proxy'],
   }
 
