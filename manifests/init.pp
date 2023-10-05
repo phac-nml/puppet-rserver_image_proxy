@@ -1,7 +1,8 @@
 # Proxy RStudio Server images for JupyterHub by creating and installing a python module
 class rserver_image_proxy(
   String $image_path,
-  Array $images = []
+  Array $images = [],
+  Number $python_minor_version = 9 # only tested on python 3, so major version is not variable
 ) {
   file { '/tmp/rserver_image_proxy':
     ensure => 'directory',
@@ -31,12 +32,12 @@ class rserver_image_proxy(
     require => File['/tmp/rserver_image_proxy/rserver_image_proxy'],
   }
 
-  # extract major python version (i.e. 3.9) from python --version
-  $python_version = inline_template("<%=`/opt/jupyterhub/bin/python3 --version | tr -d '\\n' | sed 's/Python //' | sed 's/\\.[0-9]\\+$//'`%>")
-
   $search = $images
-    .map |$image| { "grep -q 'setup_rserver_${image}()' /opt/jupyterhub/lib64/python${python_version}/site-packages/rserver_image_proxy/__init__.py"}
+    .map |$image| { "grep -q 'setup_rserver_${image}()' /opt/jupyterhub/lib64/python3${python_minor_version}/site-packages/rserver_image_proxy/__init__.py"}
     .join(' && ')
+
+  # TODO remove this
+  notify{"string of greps is: ${search}":}
 
   # only install the proxy if jupyterhub is installed
   exec { 'install rserver_image_proxy':
