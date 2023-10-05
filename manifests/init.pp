@@ -33,7 +33,7 @@ class rserver_image_proxy(
   }
 
   $search = $images
-    .map |$image| { "grep -q 'setup_rserver_${image}()' /opt/jupyterhub/lib64/python3${python_minor_version}/site-packages/rserver_image_proxy/__init__.py"}
+    .map |$image| { "grep -q 'setup_rserver_${image}()' /opt/jupyterhub/lib64/python3.${python_minor_version}/site-packages/rserver_image_proxy/__init__.py"}
     .join(' && ')
 
   # TODO remove this
