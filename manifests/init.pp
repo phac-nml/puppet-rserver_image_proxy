@@ -2,7 +2,7 @@
 class rserver_image_proxy(
   String $image_path,
   Array $images = [],
-  Number $python_minor_version = 9 # only tested on python 3, so major version is not variable
+  Integer $python_minor_version = 9 # only tested on python 3, so major version is not variable
 ) {
   file { '/tmp/rserver_image_proxy':
     ensure => 'directory',
